@@ -16,20 +16,25 @@
       <th>DeadLine</th>
       <th>Tasks</th>
       <th>Completed Tasks</th>
-      <th>Manage</th>
+      <th colspan="2">Manage</th>
     </tr>
   </thead>
   <tbody>
     {% for project in projects %}
     <tr>
       <th>{{forloop.counter}}</th>
-      <td><a href="{% url 'todo:view_project' project.pk %}">{{project.name}}</a></td>
+      <td>
+        <a href="{% url 'todo:view_project' project.pk %}">{{project.name}}</a><br>
+        <small>(<a style="color:gray" href="{% url 'todo:view_list' project.folder.pk %}">{{project.folder.name}}</a>)</small>
+      </td>
       <td>{{project.description}}</td>
       <td>{{project.deadline}}</td>
       <td>{{project.tasks.count}}</td>
       <td>{{project.completed_tasks.count}}</td>
       <td>
         <a class="btn btn-primary" href="{% url 'todo:edit_project' project.pk %}">Edit</a>
+      </td>
+      <td>
         <a class="btn btn-danger delete" href="{% url 'todo:delete_project' project.pk %}">Delete</a>
       </td>
     </tr>

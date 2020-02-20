@@ -1,5 +1,5 @@
 <div class="container mb-5">
-  <h2 class="mb-5 text-muted">{{name}}</h2>
+  <h2 class="mb-5 text-muted">{{name}} ({{tasks.count}}) </h2>
   {% for task in tasks %}
     <div class="container-fluid bg-white">
       <div class="row py-3 mb-4 task-border align-items-center">
@@ -17,6 +17,7 @@
         </div>
         <div class="col-5">
            {{task.description}}
+           <!-- truncatechars:9 -->
         </div>
         <div class="col-2">
           {{ task.deadline }}

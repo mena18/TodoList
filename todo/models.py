@@ -24,17 +24,17 @@ class Project(models.Model):
     deadline = models.DateField(blank=True,null=True)
     finished = models.BooleanField(default=False)
     folder = models.ForeignKey(Folder,on_delete=models.CASCADE)
-    expected_time = models.IntegerField(default=0)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+    priority = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
 
     def tasks(self):
-        return self.task_set.filter(finished=False)
+        return self.task_set.filter(finished=False).order_by('deadline')
 
     def completed_tasks(self):
-        return self.task_set.filter(finished=True)
+        return self.task_set.filter(finished=True).order_by('deadline')
 
 class Task(models.Model):
     name = models.CharField(max_length=100)

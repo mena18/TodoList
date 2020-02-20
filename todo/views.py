@@ -155,7 +155,7 @@ def ViewProject(request,pk):
 
 
 def ViewProjects(request):
-    projects = Project.objects.filter(user=request.user)
+    projects = Project.objects.filter(user=request.user).order_by('deadline')
     context={"projects":projects}
     return render(request,"todo/all_projects.html",context)
 
@@ -219,7 +219,7 @@ def DeleteList(request,pk):
 
 def ViewList(request,pk):
     folder = get_object_or_404(Folder,pk=pk)
-    projects = Project.objects.filter(user=request.user,folder=folder)
+    projects = Project.objects.filter(user=request.user,folder=folder).order_by('deadline')
     context={"projects":projects}
     return render(request,"todo/all_projects.html",context)
 
@@ -236,33 +236,100 @@ def ViewLists(request):
 
 
 
-
-
-
-
-tasks=[
-
-{'name':"tasks operations",
+tasks = [
+{'name':"reading about personal projects",
 "description":"",
-"deadline":datetime.date(2020,2,19)
+"deadline":datetime.date(2020,2,24),
+"project":"Personal project",
 },
-{'name':"project operations",
+{'name':"make the digrams ",
 "description":"",
-"deadline":datetime.date(2020,2,19)
+"deadline":datetime.date(2020,2,24),
+"project":"Personal project",
 },
-{'name':"Folder operations",
+{'name':"template and design",
 "description":"",
-"deadline":datetime.date(2020,2,19)
+"deadline":datetime.date(2020,2,24),
+"project":"Personal project",
 },
-{'name':"Nice Design",
+{'name':"start implementation",
 "description":"",
-"deadline":datetime.date(2020,2,19)
+"deadline":datetime.date(2020,2,24),
+"project":"Personal project",
 },
+{'name':"organize all other projects",
+"description":"",
+"deadline":datetime.date(2020,2,26),
+"project":"Personal project",
+},
+]
 
+
+
+tasks2=[
+
+{'name':"Start making diagrams",
+"description":"making the digrams that i thing about",
+"deadline":datetime.date(2020,2,21),
+"project":"Chess",
+},
+{'name':"making all the classes and interface",
+"description":"",
+"deadline":datetime.date(2020,2,21),
+"project":"Chess",
+},
+{'name':"implement pieces and gameplay",
+"description":"",
+"deadline":datetime.date(2020,2,21),
+"project":"Chess",
+},
+{'name':"implement display on console",
+"description":"",
+"deadline":datetime.date(2020,2,21),
+"project":"Chess",
+},
+{'name':"implement display with gui",
+"description":"if you failed to do it it's ok ",
+"deadline":datetime.date(2020,2,25),
+"project":"Chess",
+},
+{'name':"hosting and domain",
+"description":"",
+"deadline":datetime.date(2020,2,21),
+"project":"urgent tasks",
+},
+{'name':"wordpress",
+"description":"",
+"deadline":datetime.date(2020,2,21),
+"project":"urgent tasks",
+},
+{'name':"mark all templates and speak with tem",
+"description":"",
+"deadline":datetime.date(2020,2,21),
+"project":"urgent tasks",
+},
+{'name':"excercise and brush teeth",
+"description":"",
+"deadline":datetime.date(2020,2,21),
+"project":"Daily work",
+},
+{'name':"learn ruby",
+"description":"",
+"deadline":datetime.date(2020,2,21),
+"project":"less important",
+},
+{'name':"learn ruby",
+"description":"",
+"deadline":datetime.date(2020,2,22),
+"project":"less important",
+},
 ]
 
 def create_many(request):
-    project = Project.objects.get(user=request.user,name='Todo')
+    # project = Project.objects.get(user=request.user,name="Software engineering")
+    # for i in range(2,13):
+    #     Task.objects.create(name=f"Chapter {i}",description="",deadline=datetime.date(2020,2,29),user=request.user,project=project)
     for task in tasks:
+        project = Project.objects.get(user=request.user,name=task['project'])
         Task.objects.create(name=task['name'],description=task['description'],deadline=task['deadline'],user=request.user,project=project)
     return redirect('todo:home')
