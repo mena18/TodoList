@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-9">
+      <h1>Today Tasks</h1>
+    </div>
+    <div class="col-3">
+      <a class="btn btn-primary" href="{% url 'todo:create_task' %}"><li class="fas fa-plus"></li>Create Task</a>
+    </div>
+  </div>
+</div>
+
+
+{% if delayed %}
+  {% include "todo/tasks.html" with tasks=delayed name="Delayed Tasks" %}
+{% endif %}
+{% include "todo/tasks.html" with tasks=today name="Uncompleted"  %}
+{% include "todo/tasks.html" with tasks=completed name="Completed Tasks" cheched="True" %}
+
+
+
+
+{% endblock %}

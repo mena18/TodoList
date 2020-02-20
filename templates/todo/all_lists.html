@@ -1,0 +1,36 @@
+{% extends "base.html"  %}
+
+{% block content %}
+
+  <h3 class="text-muted text-center m-3">
+    Lists
+    <a class="mb-3 btn btn-primary float-right" href="{% url 'todo:create_list' %}"><li class="fas fa-plus"></li> Create List</a>
+  </h3>
+
+<table class="table table-striped bg-light text-center">
+  <thead>
+    <tr class="text-muted">
+      <th>#</th>
+      <th>Name</th>
+      <th>Projects</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for list in lists %}
+    <tr>
+      <th>{{forloop.counter}}</th>
+      <td>{{list.name}}</td>
+      <td><a href="{% url 'todo:view_list' list.pk %}">{{list.project_set.count}}</a></td>
+      <td>
+        <a class="btn btn-primary" href="{% url 'todo:edit_list' list.pk %}">Edit</a>
+        <a class="btn btn-danger delete" href="{% url 'todo:delete_list' list.pk %}">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+{% endblock %}

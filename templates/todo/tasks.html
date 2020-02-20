@@ -1,0 +1,35 @@
+<div class="container mb-5">
+  <h2 class="mb-5 text-muted">{{name}}</h2>
+  {% for task in tasks %}
+    <div class="container-fluid bg-white">
+      <div class="row py-3 mb-4 task-border align-items-center">
+        <div class="col-1 rounded_checkbox">
+          <form  action="{% url 'todo:finish' %}" method="POST" >
+            {% csrf_token %}
+            <input class="checkbox_click" type="checkbox" id="{{task.id}}" />
+            <input type="hidden" name="pk" value="{{task.pk}}" />
+            <label for="{{task.id}}"></label>
+          </form>
+        </div>
+        <div class="col-2">
+          <p style="margin:0px;">{{task.name}}</p>
+          <small><a style="color:gray" href="{% url 'todo:view_project' task.project.pk %}">{{task.project.name}}</a></small>
+        </div>
+        <div class="col-5">
+           {{task.description}}
+        </div>
+        <div class="col-2">
+          {{ task.deadline }}
+        </div>
+        <div class="col-1">
+          <a href="{% url 'todo:edit_task' task.pk %}" data-toggle="tooltip" title="<h6>edit</h6>" data-html="true" data-placement="top"><i class="fas fa-edit fa-lg text-success mr-2"></i></a>
+        </div>
+        <div class="col-1">
+          <a class="delete" href="{% url 'todo:delete_task' task.pk %}" data-toggle="tooltip" title="<h6>delete</h6>" data-html="true" data-placement="top"><i class="fas fa-trash-alt fa-lg text-danger"></i></a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+  <h1> No tasks </h1>
+  {% endfor %}
+</div>
